@@ -131,7 +131,7 @@ async function generatePdfFromHtml(htmlContent) {
 
   try {
     const page = await browser.newPage();
-    await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+    await page.setContent(htmlContent, { waitUntil: "domcontentloaded" });
 
     return await page.pdf({
       format: "A4",
@@ -201,7 +201,12 @@ Return a valid JSON object matching the schema with a single "html" key containi
         console.warn(`[Gemini API ${error.status}] High demand. Retrying (${attempt}/${retries}) in ${delay / 1000}s...`);
         await new Promise((resolve) => setTimeout(resolve, delay));
       } else {
-        console.error("Resume PDF generation failed:", error);
+        console.error("Resume PDF generation failed:", {
+          attempt,
+          message: error.message,
+          status: error.status,
+          stack: error.stack,
+        });
         throw error;
       }
     }
