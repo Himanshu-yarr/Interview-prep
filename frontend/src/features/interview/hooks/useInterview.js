@@ -69,6 +69,8 @@ export const useInterview = () => {
       link.setAttribute("download", `resume_${interviewReportId}.pdf`)
       document.body.appendChild(link)
       link.click()
+      link.remove()
+      window.setTimeout(() => window.URL.revokeObjectURL(url), 1000)
     }
     catch (error) {
       console.log(error)
