@@ -7,7 +7,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = usestate("");
+  const [password, setPassword] = useState("");
 
   const { loading, handleRegister } = useAuth();
 
